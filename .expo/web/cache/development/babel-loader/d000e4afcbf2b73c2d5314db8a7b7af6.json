@@ -1,1 +1,0 @@
-{"ast":null,"code":"import { Icon } from \"./Icon\";\nexport { Icon };","map":{"version":3,"names":["Icon"],"sources":["C:/Users/pontsho/Desktop/ServitorFinderApp/node_modules/react-native-gradient-icon/src/index.ts"],"sourcesContent":["import {Icon} from './Icon';\r\nexport {Icon};"],"mappings":"AAAA,SAAQA,IAAR;AACA,SAAQA,IAAR"},"metadata":{},"sourceType":"module"}
