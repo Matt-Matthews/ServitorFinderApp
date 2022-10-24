@@ -1,0 +1,35 @@
+.body{
+    height: 100vh;
+    width: 100%;
+    background-color:#151D30;
+}
+.main{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 87vh;
+}
+.leftNav{
+    width: 20%;
+    height: 100%;
+    background-color: #292F45;
+    border-radius: 0 25px 0 0;
+
+}
+.menuItem{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    gap: 5%;
+    padding: 5%;
+    cursor: pointer;
+}
+.text{
+    background-image: linear-gradient(to right,#B615DE,#D428A8);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.textColor{
+    color: #fff;
+}

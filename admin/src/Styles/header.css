@@ -1,0 +1,26 @@
+.header-navbar{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.logo{
+    height: 80px;
+    width: 80px;
+    padding: 20px;
+}
+.admin{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    width: 8%;
+    align-items: center;
+}
+h4{
+    color: #fff;
+}
+.admin-image{
+    height: 50px;
+    width: 50px; 
+    border-radius: 50px;
+} 
