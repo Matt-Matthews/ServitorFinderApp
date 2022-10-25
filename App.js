@@ -8,6 +8,8 @@ import SignUp from './src/screens/SignUp';
 import RegisterService from './src/screens/registerService';
 import ServitorProfile from './src/screens/Profile';
 import RequestForm from './src/screens/RequestForm';
+import {Provider} from 'react-redux';
+import store from './src/store';
 
 console.disableYellowBox = true;
 LogBox.ignoreAllLogs();
@@ -17,6 +19,7 @@ export default function App() {
 
 
   return (
+    <Provider store={store}>
     <NavigationContainer >
       <Stack.Navigator screenOptions={{headerShown: false,}}>
       <Stack.Screen
@@ -49,6 +52,7 @@ export default function App() {
         />
       </Stack.Navigator>
     </NavigationContainer>
+    </Provider>
   );
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
 export default function Categories({catIndex, setCatIndex}) {
-    const categories = ['All', 'Plumbing', 'Electrical', 'Designer'];
+    const categories = ['All', 'Plumber', 'Electrician', 'Designer'];
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     },
     btn: {
         paddingHorizontal: Dimensions.get('window').width * 0.03, 
-        paddingVertical: Dimensions.get('window').height*0.01,
+        paddingVertical: Dimensions.get('window').height*0.005,
         marginLeft: Dimensions.get('window').width * 0.02,
         borderRadius: 25,
         alignItems: 'center',

@@ -11,7 +11,7 @@ export default function AccountSettings() {
   return (
     <SafeAreaView style={{flex:1}}>
         <StatusBar backgroundColor="#000" barStyle="light-content" />
-        <Header withBackIcon={true} />
+        <Header navigation={navigation} withBackIcon={true} />
         
         <ScrollView style={{backgroundColor:'black'}}>
         <View style={{marginTop: Dimensions.get('window').height*0.04,}} />

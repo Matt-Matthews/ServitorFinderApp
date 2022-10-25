@@ -16,7 +16,7 @@ function RequestForm({navigation}){
     return(
         <View style={styles.container}>
               <SafeAreaView>
-                  <Header withBackIcon={true} />
+                  <Header navigation={navigation} withBackIcon={true} />
                   <ScrollView>
                   <KeyboardAvoidingView behavior="position">
                   <View style={styles.top}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Dimensions,
   Pressable,
   StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import CustomInput from '../components/CustomInput';
 import { LinearGradient } from "expo-linear-gradient";
@@ -17,23 +18,71 @@ import MaskedView from '@react-native-masked-view/masked-view';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../assets/images/logo.png';
 import CustomeBtn from '../components/CustomeBtn';
-SafeAreaView
+import * as Location from 'expo-location';
+import { getAddress } from '../features/user/userSlicer';
+import { useDispatch } from 'react-redux';
+import { auth, firestore } from '../config/firebase';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import {collection, query,where, onSnapshot,addDoc, updateDoc,doc, getDocs} from 'firebase/firestore';
 
 const SignIn = ({navigation}) => {
   const {height, width} = useWindowDimensions();
+  const [email,setEmail] = React.useState('');
+  const [password,setPassword] = React.useState('');
+  const [isLoading,setIsLoading] = useState(false);
+
   function onPress() {
     navigation.navigate('SignUp');
   }
-  function gotoHome() {
-    navigation.navigate('BottomNav');
+  async function gotoHome() {
+    // if(email&&password){
+    //   setIsLoading(true);
+    //   try{
+    //     const collectionRef = collection(firestore, 'users');
+    //     await signInWithEmailAndPassword(auth,email,password).then(async(result)=>{
+    //       let dataQuery = query(collectionRef, where("id", "==", result.user.uid));
+    //       let userData = await getDocs(dataQuery).then((snapshot)=>snapshot.docs.map(doc=>(doc.data())));
+          navigation.navigate('BottomNav');
+    //       setIsLoading(false);
+    //       console.log();
+          
+    //     })
+    //   }catch(e){
+    //     alert(e.message);
+    //     setIsLoading(false);
+    //   }
+      
+    // }else{
+    //   alert('complete the form');
+    // }
+    
   }
+
+  const dispatch = useDispatch();
+  const [location, setLocation] = React.useState(null);
+
+  React.useEffect(() => {
+    (async () => {
+      
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== 'granted') {
+        alert('Permission to access location was denied!');
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const address = await Location.reverseGeocodeAsync(location.coords);
+      dispatch(getAddress({address,location}));
+    })();
+  }, []);
+
   return (
     <SafeAreaView style={[styles.root]}>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
       <ScrollView showsVerticalScrollIndicator={false}>
         <KeyboardAvoidingView
           style={{flex: 1, backgroundColor: 'black', height: height}}
-          behavior="position"
+          behavior="height"
           enabled={true}>
           <ScrollView>
             <View style={styles.container}>
@@ -43,8 +92,8 @@ const SignIn = ({navigation}) => {
                 resizeMode="cover"
               />
               <Text style={styles.heading}>Login</Text>
-              <CustomInput icon='md-mail-sharp' placeholder='Email' />
-              <CustomInput icon='md-lock-closed' password={true} placeholder='Password' />
+              <CustomInput icon='md-mail-sharp' setValue={setEmail} placeholder='Email' />
+              <CustomInput icon='md-lock-closed' setValue={setPassword} password={true} placeholder='Password' />
               <View
                 style={[
                   {width: width * 0.9, height: height * 0.07},
@@ -54,7 +103,8 @@ const SignIn = ({navigation}) => {
               </View>
               <View style={{marginTop: Dimensions.get('window').height*0.01,}} />
                     
-              <CustomeBtn text={'Login'} onPress={gotoHome} /> 
+              <CustomeBtn text={'Login'} onPress={gotoHome} />
+              {isLoading&&<ActivityIndicator size="large" color="#D428A8" />} 
               <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
               <Pressable onPress={onPress}  style={[styles.centre]}>
                 <Text style={{color: '#fff',}}>Don`t have an account?</Text>

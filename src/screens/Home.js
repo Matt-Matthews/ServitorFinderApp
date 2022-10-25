@@ -4,13 +4,13 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import { Entypo } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { FlatGrid } from 'react-native-super-grid';
-import React from 'react';
+import React, {useReducer} from 'react';
 import SearchInput from '../components/SearchInput';
 import HomeSearchInput from '../components/HomeSearchInput';
 import { Icon } from "react-native-gradient-icon";
 import Categories from '../components/Categories';
 import Ratings from '../components/Ratings';
-
+import {useSelector, useDispatch} from 'react-redux';
 
 
 
@@ -33,10 +33,15 @@ function Home({navigation}){
 
       const [catIndex, setCatIndex] = React.useState(0);
       const img = 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
+
+
+      const {address} = useSelector(state=>state.user);
+      // const dispatch = useDispatch();
+      // dispatch(getHotelsData({data}))
     return(
         <View style={styles.container}>
             <SafeAreaView>
-                <Header />
+                <Header widthMsg={true} />
               <ScrollView stickyHeaderIndices={[2]}>
                 <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
                 <View style={styles.location}>
@@ -50,7 +55,7 @@ function Home({navigation}){
                     name="md-location-sharp" 
                     type="ionicon" 
                 />
-                        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', }}>Polokwane</Text>
+                        <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', }}>{address?address[0].city:'Location'}</Text>
                     </View>
                     <Pressable onPress={()=>navigation.navigate('Profile')}>
                                 <Image source={{uri:img}} resizeMode='cover' style={{width: Dimensions.get('window').width*0.15,
@@ -73,11 +78,8 @@ function Home({navigation}){
                    
                     <FlatGrid
                         itemDimension={130}
-                        data={items}
                         style={styles.gridView}
-                        // staticDimension={300}
-                        // fixed
-                        // horizontal
+                        data={items}
                         spacing={10}
                         renderItem={({ item }) => (
                             <Pressable onPress={()=>navigation.navigate('Profile')} style={[styles.itemContainer, { backgroundColor: '#131313' }]}>

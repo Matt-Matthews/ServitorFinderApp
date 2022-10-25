@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -11,21 +11,58 @@ import {
   SafeAreaView,
   Dimensions,
   StatusBar,
+  ActivityIndicator
 } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from '@react-native-masked-view/masked-view';
 import logo from '../assets/images/logo.png';
 import CustomeBtn from '../components/CustomeBtn';
 import CustomInput from '../components/CustomInput';
+import  {auth, firestore}  from '../config/firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import {collection, addDoc } from "firebase/firestore";
+
 
 const SignUp = ({navigation}) => {
   const {height} = useWindowDimensions();
+  const [firstName,setFirstName] = useState('');
+  const [lastName,setLastName] = useState('');
+  const [email,setEmail] = useState('');
+  const [telNo,setTelNo] = useState('');
+  const [password,setPassword] = useState('');
+  const [confPassword,setConfPassword] = useState('');
+  const [isLoading,setIsLoading] = useState(false);
+
+
   function onPress() {
     navigation.navigate('SignIn');
   }
 
-  function registerService(){
-    navigation.navigate('RegisterService')
+  async function registerService(){
+    const collectionRef = collection(firestore, 'users');
+        if(firstName&&lastName&&email&&telNo&&password&&confPassword&&password===confPassword){
+            setIsLoading(true);
+            try{
+                await createUserWithEmailAndPassword(auth,email,password).then((results)=>{
+                    const userId = results.user.uid;
+                    addDoc(collectionRef,{
+                        firstName: firstName,
+                        lastName: lastName,
+                        email: email,
+                        telNo: telNo,
+                        password: password,
+                        userId: userId,
+                    }).then(()=>{
+                      navigation.navigate('SignIn');
+                        setIsLoading(false);
+                    })
+                })
+            }catch(e){
+                alert(e.message);
+            }
+        }else{
+            alert('complete the form')
+        }
   }
   
   return (
@@ -34,7 +71,7 @@ const SignUp = ({navigation}) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         <KeyboardAvoidingView
           style={{flex: 1, height: height}}
-          behavior="position"
+          behavior="height"
           enabled={true}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.container}>
@@ -44,15 +81,16 @@ const SignUp = ({navigation}) => {
                 resizeMode="contain"
               />
               <Text style={styles.heading}>Sign up</Text>
-              <CustomInput icon='md-person-sharp' placeholder='Firstname' />
-              <CustomInput icon='md-person-sharp' placeholder='Lastname' />
-              <CustomInput icon='md-call-sharp' placeholder='Mobile number' />
-              <CustomInput icon='md-mail-sharp' placeholder='Email' />
-              <CustomInput icon='md-lock-closed' password={true} placeholder='Create password' />
-              <CustomInput icon='md-lock-closed' password={true} placeholder='Confirm password' />
+              <CustomInput icon='md-person-sharp' setValue={setFirstName} placeholder='Firstname' />
+              <CustomInput icon='md-person-sharp' setValue={setLastName} placeholder='Lastname' />
+              <CustomInput icon='md-call-sharp' setValue={setTelNo} placeholder='Mobile number' />
+              <CustomInput icon='md-mail-sharp' setValue={setEmail} placeholder='Email' />
+              <CustomInput icon='md-lock-closed' setValue={setPassword} password={true} placeholder='Create password' />
+              <CustomInput icon='md-lock-closed' setValue={setConfPassword} password={true} placeholder='Confirm password' />
               <View style={{marginTop: Dimensions.get('window').height*0.03,}} />
                     
               <CustomeBtn text={'Sign up'} onPress={registerService} /> 
+              {isLoading&&<ActivityIndicator size="large" color="#D428A8" />}
               <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
               <View style={[styles.centre]}>
                 <Text style={{color: '#fff',}}>Already have an account?</Text>

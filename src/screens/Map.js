@@ -6,13 +6,15 @@ import Header from '../components/Header';
 import mapStyles from '../components/mapStyle.json';
 import CustomeMarker from '../components/CustomeMarker';
 import SearchInput from '../components/SearchInput';
-
+import {useSelector} from 'react-redux';
 
 export default function Map({navigation}) {
 
   function viewProfile(){
     navigation.navigate('Profile');
   }
+
+  const {location} = useSelector(state=>state.user);
   
   return (
     <SafeAreaView style={styles.container}>
@@ -25,8 +27,8 @@ export default function Map({navigation}) {
           zoomEnabled 
           style={styles.map} 
           initialRegion={{
-            latitude: -23.9168558,
-            longitude: 29.4576678,
+            latitude: location? parseFloat(location.coords.latitude) : -23.9168558,
+            longitude: location? parseFloat(location.coords.longitude) : 29.4576678,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}

@@ -1,17 +1,20 @@
-import { View, Text, Image, Pressable, StyleSheet, useWindowDimensions} from "react-native";
+import { View, Text, Image, Pressable, StyleSheet, useWindowDimensions,Dimensions} from "react-native";
 import React from "react";
 import logo from '../assets/images/logo.png';
 import { Icon } from "react-native-gradient-icon";
 
-export default function Header({withBackIcon,}) {
+export default function Header({withBackIcon, widthMsg, navigation}) {
     const {height, width} = useWindowDimensions();
+    function prevPage() {
+        navigation.goBack();
+    }
   return (
     <View style={{...styles.container}}>
 
         <View style={{...styles.iconsRow}}>
-            <Pressable style={{width: 32, marginLeft: width* 0.03,}}>
+            <Pressable onPress={prevPage} style={{width: Dimensions.get('window').height*0.04, marginLeft: width* 0.03,}}>
                 {withBackIcon&&<Icon  
-                    size={32}
+                    size={Dimensions.get('window').height*0.04}
                     colors={[
                         {color:"#B615DE",offset:"0",opacity:"1"},
                         {color:"#D428A8",offset:"1",opacity:"1"},
@@ -25,21 +28,21 @@ export default function Header({withBackIcon,}) {
 
         <View style={{...styles.iconsRow}}>
 
-            <Pressable>
-                <Icon  
-                    size={32}
+            <Pressable style={{width: Dimensions.get('window').height*0.04}}>
+            {widthMsg&&<Icon  
+                    size={Dimensions.get('window').height*0.04}
                     colors={[
                         {color:"#B615DE",offset:"0",opacity:"1"},
                         {color:"#D428A8",offset:"1",opacity:"1"},
                     ]}
                     name="md-chatbox" 
                     type="ionicon" 
-                />
+                />}
             </Pressable>
             
             <Pressable>
                 <Icon  
-                    size={32}
+                    size={Dimensions.get('window').height*0.04}
                     colors={[
                         {color:"#B615DE",offset:"0",opacity:"1"},
                         {color:"#D428A8",offset:"1",opacity:"1"},
@@ -49,6 +52,7 @@ export default function Header({withBackIcon,}) {
                 />
             </Pressable>
         </View>
+        
     </View>
   );
 }
@@ -60,6 +64,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#000',
+        position: 'relative'
     },
     iconsRow: {
         flexDirection: 'row',
@@ -68,8 +73,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     img: {
-        width: 55, 
-        height: 55,
+        width: Dimensions.get('window').height*0.07, 
+        height: Dimensions.get('window').height*0.07,
         marginLeft: '15%',
-    }
+    },
+    
 });

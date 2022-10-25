@@ -14,6 +14,9 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "packagerOpts": {
+      "sourceExts": ["cjs"]
+    },
     "assetBundlePatterns": [
       "**/*"
     ],

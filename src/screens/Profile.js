@@ -6,6 +6,7 @@ import { Entypo } from '@expo/vector-icons';
 import Ratings from "../components/Ratings";
 import AccountPic from "../components/AccountPic";
 import RatingsCard from "../components/RatingsCard";
+import { Icon } from "react-native-gradient-icon";
 
 
 const img = 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
@@ -18,7 +19,7 @@ function ServitorProfile({navigation}){
     return(
         <View style={styles.container}>
             <SafeAreaView>
-                <Header withBackIcon={true}/>
+                <Header widthMsg={true} navigation={navigation} withBackIcon={true}/>
                 <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
                  {/* <View style={styles.image}> */}
                  <Image source={{uri:img}} style={{width: Dimensions.get('window').width*0.3,
@@ -47,7 +48,20 @@ function ServitorProfile({navigation}){
                     <AccountPic />
                     <AccountPic />
                     <AccountPic />
+                    <Pressable style={{...styles.addBtn}}>
+                 <Icon  
+                    size={Dimensions.get('window').height*0.04}
+                    colors={[
+                        {color:"#B615DE",offset:"0",opacity:"1"},
+                        {color:"#D428A8",offset:"1",opacity:"1"},
+                    ]}
+                    style={{alignSelf: 'center',}}
+                    name="md-add" 
+                    type="ionicon" 
+                />
+                 </Pressable>
                  </ScrollView>
+                 
                  </View>
                  
                  <View style={styles.reviews}>
@@ -97,5 +111,15 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         height: 140,
         paddingLeft: '4%'
-     }
+     },
+     addBtn: {
+         width: Dimensions.get('window').width* 0.3, 
+         height: Dimensions.get('window').height* 0.2, 
+         borderRadius: 25, 
+         backgroundColor: '#131313', 
+         marginRight: 10,
+         justifyContent: 'center',
+         alignItems: 'center',
+         display: 'flex'
+      }
 })

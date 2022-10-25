@@ -5,11 +5,11 @@ import { Icon } from "react-native-gradient-icon";
 import { LinearGradient } from "expo-linear-gradient";
 
 
-export default function CustomInput({icon, placeholder, password, fileInput}) {
+export default function CustomInput({icon, placeholder, password, fileInput,setValue}) {
   return (
     <View style={{...styles.submainview, display:'flex',flexDirection:'row'}}>
         <Ionicons name={icon} size={20} color='gray' />     
-        <TextInput placeholderTextColor={"grey"} placeholder={placeholder} style={styles.inputs}></TextInput>
+        <TextInput onChangeText={text=>setValue(text)} placeholderTextColor={"grey"} placeholder={placeholder} style={styles.inputs}></TextInput>
         <Pressable style={{width: Dimensions.get('window').width*0.3,}}>
         {password&&<Icon  
                     size={25}
