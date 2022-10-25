@@ -39,30 +39,31 @@ const SignUp = ({navigation}) => {
   }
 
   async function registerService(){
-    const collectionRef = collection(firestore, 'users');
-        if(firstName&&lastName&&email&&telNo&&password&&confPassword&&password===confPassword){
-            setIsLoading(true);
-            try{
-                await createUserWithEmailAndPassword(auth,email,password).then((results)=>{
-                    const userId = results.user.uid;
-                    addDoc(collectionRef,{
-                        firstName: firstName,
-                        lastName: lastName,
-                        email: email,
-                        telNo: telNo,
-                        password: password,
-                        userId: userId,
-                    }).then(()=>{
-                      navigation.navigate('SignIn');
-                        setIsLoading(false);
-                    })
-                })
-            }catch(e){
-                alert(e.message);
-            }
-        }else{
-            alert('complete the form')
-        }
+    navigation.navigate('RegisterService');
+    // const collectionRef = collection(firestore, 'users');
+    //     if(firstName&&lastName&&email&&telNo&&password&&confPassword&&password===confPassword){
+    //         setIsLoading(true);
+    //         try{
+    //             await createUserWithEmailAndPassword(auth,email,password).then((results)=>{
+    //                 const userId = results.user.uid;
+    //                 addDoc(collectionRef,{
+    //                     firstName: firstName,
+    //                     lastName: lastName,
+    //                     email: email,
+    //                     telNo: telNo,
+    //                     password: password,
+    //                     userId: userId,
+    //                 }).then(()=>{
+    //                   navigation.navigate('SignIn');
+    //                     setIsLoading(false);
+    //                 })
+    //             })
+    //         }catch(e){
+    //             alert(e.message);
+    //         }
+    //     }else{
+    //         alert('complete the form')
+    //     }
   }
   
   return (

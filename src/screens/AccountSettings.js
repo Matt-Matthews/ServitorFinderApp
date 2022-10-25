@@ -6,7 +6,7 @@ import Header from '../components/Header';
 import CustomInput from '../components/CustomInput';
 import CustomeBtn from '../components/CustomeBtn';
 
-export default function AccountSettings() {
+export default function AccountSettings({navigation}) {
 
   return (
     <SafeAreaView style={{flex:1}}>

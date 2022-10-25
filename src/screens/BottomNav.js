@@ -6,6 +6,7 @@ import Home from './Home';
 import Notifications from './Notifications';
 import Settings from './Settings';
 
+
 const Tab = createBottomTabNavigator();
 
 export default function BottomNav() {

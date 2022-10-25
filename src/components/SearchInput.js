@@ -2,11 +2,19 @@ import { View, StyleSheet, TextInput, Pressable, Dimensions } from "react-native
 import React from "react";
 import { Icon } from "react-native-gradient-icon";
 
-export default function SearchInput() {
+export default function SearchInput({setSearchItem, search, getData}) {
+
+  function isEmpty(text){
+    if(text===''){
+      getData('All');
+    }
+    
+  }
+
   return (
     <View style={styles.searchContainer}>
-        <TextInput placeholderTextColor={'gray'} style={styles.input} placeholder='search' />
-        <Pressable style={{}}>
+        <TextInput placeholderTextColor={'gray'} onChangeText={text=>{setSearchItem(text);isEmpty(text)}} style={styles.input} placeholder='search' />
+        <Pressable onPress={search} style={{}}>
             <Icon  
                 size={32}
                 colors={[

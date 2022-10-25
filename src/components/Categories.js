@@ -2,14 +2,14 @@ import { View, Text, Pressable, Dimensions, StyleSheet, ScrollView } from "react
 import React from "react";
 import { LinearGradient } from "expo-linear-gradient";
 
-export default function Categories({catIndex, setCatIndex}) {
+export default function Categories({catIndex, setCatIndex, onPress}) {
     const categories = ['All', 'Plumber', 'Electrician', 'Designer'];
   return (
     <View style={styles.container}>
       <ScrollView horizontal>
       {
         categories.map((item,index)=>{
-            return <Pressable onPress={()=>setCatIndex(index)} key={index}>
+            return <Pressable onPress={()=>{setCatIndex(index);onPress(item)}} key={index}>
                 {catIndex===index?<LinearGradient  
                     style={{
                             ...styles.btn
