@@ -19,7 +19,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import logo from '../assets/images/logo.png';
 import CustomeBtn from '../components/CustomeBtn';
 import * as Location from 'expo-location';
-import { getAddress } from '../features/user/userSlicer';
+import { getAddress, getUser } from '../features/user/userSlicer';
 import { useDispatch } from 'react-redux';
 import { auth, firestore } from '../config/firebase';
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -27,6 +27,7 @@ import {collection, query,where, onSnapshot,addDoc, updateDoc,doc, getDocs} from
 
 const SignIn = ({navigation}) => {
   const {height, width} = useWindowDimensions();
+  const dispatch = useDispatch();
   const [email,setEmail] = React.useState('');
   const [password,setPassword] = React.useState('');
   const [isLoading,setIsLoading] = useState(false);
@@ -42,6 +43,7 @@ const SignIn = ({navigation}) => {
     //     await signInWithEmailAndPassword(auth,email,password).then(async(result)=>{
     //       let dataQuery = query(collectionRef, where("id", "==", result.user.uid));
     //       let userData = await getDocs(dataQuery).then((snapshot)=>snapshot.docs.map(doc=>(doc.data())));
+              // dispatch(getUser({userData}));
           navigation.navigate('BottomNav');
     //       setIsLoading(false);
     //       console.log();
@@ -58,7 +60,7 @@ const SignIn = ({navigation}) => {
     
   }
 
-  const dispatch = useDispatch();
+  
   const [location, setLocation] = React.useState(null);
 
   React.useEffect(() => {
