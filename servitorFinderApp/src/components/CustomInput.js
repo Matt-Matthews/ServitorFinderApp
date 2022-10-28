@@ -10,7 +10,7 @@ export default function CustomInput({icon, placeholder, password, fileInput,setV
   return (
     <View style={{...styles.submainview, display:'flex',flexDirection:'row'}}>
         <Ionicons name={icon} size={20} color='gray' />     
-        <TextInput onChangeText={text=>setValue(text)} value={value} placeholderTextColor={"grey"} secureTextEntry={secureText} placeholder={placeholder} style={styles.inputs}></TextInput>
+        <TextInput onChangeText={text=>setValue(text.trim())} value={value} placeholderTextColor={"grey"} secureTextEntry={secureText} placeholder={placeholder} style={styles.inputs}></TextInput>
         <Pressable onPress={()=>setSecureText(prev=>!prev)} style={{width: Dimensions.get('window').width*0.3,}}>
         {password&&<Icon  
                     size={25}

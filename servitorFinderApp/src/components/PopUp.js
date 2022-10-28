@@ -1,10 +1,18 @@
-import { View, Text,StyleSheet} from "react-native";
+import { Pressable, Text,StyleSheet, Dimensions} from "react-native";
 import React from "react";
 import { Icon } from "react-native-gradient-icon";
+import { auth } from "../config/firebase";
 
-export default function PopUp() {
+
+export default function PopUp({navigation}) {
+
+    function logout(){
+        auth.signOut().then(()=>{
+            navigation.navigate('SignIn');
+        })
+    }
   return (
-    <View style={styles.popUp}>
+    <Pressable onPress={logout} style={styles.popUp}>
         <Icon  
                     size={Dimensions.get('window').height*0.04}
                     colors={[
@@ -14,8 +22,8 @@ export default function PopUp() {
                     name="md-log-out-outline" 
                     type="ionicon" 
                 />
-                <Text>Logout</Text>
-        </View>
+                <Text style={{color: '#fff', marginLeft: 10}}>Logout</Text>
+        </Pressable>
   );
 }
 const styles = StyleSheet.create({
@@ -25,9 +33,11 @@ const styles = StyleSheet.create({
         elevation: 3, 
         width: Dimensions.get('window').width*0.35, 
         padding:Dimensions.get('window').height*0.01, 
-        backgroundColor: 'red',
+        backgroundColor: '#131313',
         right: 10,
-        bottom: -50,
+        top: Dimensions.get('window').height*0.08,
         flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 25,
     }
 })

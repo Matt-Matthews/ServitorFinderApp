@@ -13,6 +13,7 @@ import Ratings from '../components/Ratings';
 import {useSelector, useDispatch} from 'react-redux';
 import {getDocs, collection, query, where, onSnapshot, } from 'firebase/firestore';
 import {firestore} from '../config/firebase';
+import PopUp from '../components/PopUp';
 
 
 
@@ -31,6 +32,7 @@ function Home({navigation}){
       const [searchData,setSearchData] = React.useState([]);
       const [isLoading, setIsLoading] = React.useState(false);
       const [searchItem,setSearchItem] = React.useState('');
+      const [isOpen,setIsOpen] = React.useState(false);
 
       async function getServitorData(category) {
         const collectionRef = collection(firestore, 'servitors');
@@ -72,10 +74,12 @@ function Home({navigation}){
       // const dispatch = useDispatch();
       // dispatch(getHotelsData({data}))
     return(
-        <View style={styles.container}>
+        <Pressable onPress={()=>setIsOpen(false)} style={styles.container}>
             <SafeAreaView>
-                <Header widthMsg={true} />
-              <ScrollView stickyHeaderIndices={[2]}>
+                <Header setIsOpen={setIsOpen} widthMsg={true} />
+                {isOpen&&<PopUp navigation={navigation} />}
+              <ScrollView  stickyHeaderIndices={[2]}>
+                
                 <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
                 <View style={styles.location}>
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -90,7 +94,7 @@ function Home({navigation}){
                 />
                         <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', }}>{address?address[0].city:'Location'}</Text>
                     </View>
-                    <Pressable onPress={()=>navigation.navigate('Profile')}>
+                    <Pressable>
                                 <Image source={{uri: userData[0].imgUrl}} resizeMode='cover' style={{width: Dimensions.get('window').width*0.15,
                                       height: Dimensions.get('window').width*0.15, 
                                       borderRadius:Dimensions.get('window').width*0.15}}/>
@@ -115,7 +119,7 @@ function Home({navigation}){
                         data={servitorData}
                         spacing={10}
                         renderItem={({ item }) => (
-                            <Pressable onPress={()=>navigation.navigate('Profile',{data: item})} style={[styles.itemContainer, { backgroundColor: '#131313' }]}>
+                            <Pressable onPress={()=>{navigation.navigate('Profile',{data: item});}} style={[styles.itemContainer, { backgroundColor: '#131313' }]}>
                                 <Image source={{uri: item.imgUrl}} style={{width: Dimensions.get('window').width*0.2,
                                       height: Dimensions.get('window').width*0.2, 
                                       borderRadius:Dimensions.get('window').width*0.2,
@@ -141,7 +145,7 @@ function Home({navigation}){
               </ScrollView>
                 
             </SafeAreaView>
-        </View>
+        </Pressable>
      
     )
 }

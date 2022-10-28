@@ -4,16 +4,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../components/Header";
 import ServicesFilter from "../components/ServicesFilter";
 import ServitorCard from "../components/ServitorCard";
-import { collection, deleteDoc, Firestore, getDocs, query,where, onSnapshot } from 'firebase/firestore';
+import { collection, getDocs, query,where, onSnapshot } from 'firebase/firestore';
 import {firestore,auth} from '../config/firebase';
+import PopUp from "../components/PopUp";
 
-export default function Services() {
+export default function Services({navigation}) {
 
 
 const [index,setIndex] = React.useState(0);
 const [requests, setRequests] = React.useState([]);
 const [isLoading,setIsLoading] = React.useState(false);
 const [allData,setAllData] = React.useState([]);
+const [isOpen,setIsOpen] = React.useState(false);
+
 let userId = auth.currentUser.uid;
 
 async function getRequests() {
@@ -64,7 +67,8 @@ function filterData(status){
   return (
     <SafeAreaView >
       <StatusBar backgroundColor="#000" barStyle="light-content" />
-        <Header withBackIcon={false} />
+        <Header setIsOpen={setIsOpen} withBackIcon={false} />
+        {isOpen&&<PopUp navigation={navigation} />}
         <View style={styles.container}>
           <ServicesFilter index={index} onPress={filterData} setIndex={setIndex} />
           <ScrollView>

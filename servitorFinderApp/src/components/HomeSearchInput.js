@@ -12,7 +12,7 @@ if(text===''){
 
   return (
     <View style={styles.searchContainer}>
-        <TextInput onChangeText={text=>{setSearchItem(text);isEmpty(text)}} placeholderTextColor={'gray'}  style={styles.input} placeholder='search' />
+        <TextInput onChangeText={text=>{setSearchItem(text.trim());isEmpty(text)}} placeholderTextColor={'gray'}  style={styles.input} placeholder='search' />
         <Pressable style={{}} onPress={search}>
             <Icon  
                 size={32}

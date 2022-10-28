@@ -13,7 +13,7 @@ export default function SearchInput({setSearchItem, search, getData}) {
 
   return (
     <View style={styles.searchContainer}>
-        <TextInput placeholderTextColor={'gray'} onChangeText={text=>{setSearchItem(text);isEmpty(text)}} style={styles.input} placeholder='search' />
+        <TextInput placeholderTextColor={'gray'} onChangeText={text=>{setSearchItem(text.trim());isEmpty(text)}} style={styles.input} placeholder='search' />
         <Pressable onPress={search} style={{}}>
             <Icon  
                 size={32}

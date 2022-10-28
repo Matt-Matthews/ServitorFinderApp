@@ -1,16 +1,14 @@
 import { View, StyleSheet , Text, ScrollView,Image, TextInput, Dimensions, KeyboardAvoidingView, ActivityIndicator} from "react-native";
 import {SafeAreaView} from 'react-native-safe-area-context'
 import Header from "../components/Header";
-import { MaterialIcons } from '@expo/vector-icons';
-import { Entypo } from '@expo/vector-icons';
 import CustomeBtn from "../components/CustomeBtn";
 import CustomInput from "../components/CustomInput";
-import React, { useEffect, useState } from 'react'
-import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
-import {firestore,auth} from '../config/firebase'
+import React, { useState } from 'react'
+import { addDoc, collection } from 'firebase/firestore';
+import {firestore} from '../config/firebase'
 import { useSelector } from "react-redux";
+import PopUp from "../components/PopUp";
 
-const img = 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
 
 function RequestForm({navigation, route}){
       const {sevName,
@@ -24,10 +22,11 @@ function RequestForm({navigation, route}){
      const [address, setAddress] = useState("");
      const [description, setDescription] = useState("");
      const [isLoading,setIsLoading] = useState(false);
+     const [isOpen,setIsOpen] = useState(false);
+
 
      const {userData} = useSelector(state=>state.user);
-
-     console.log(servitorId);
+     
     const requestForm = () => {
         setIsLoading(true);
         const collectionRef = collection(firestore, 'Request Form');
@@ -70,7 +69,8 @@ function RequestForm({navigation, route}){
     return(
         <View style={styles.container}>
               <SafeAreaView>
-                  <Header navigation={navigation} withBackIcon={true} />
+                  <Header setIsOpen={setIsOpen} navigation={navigation} withBackIcon={true} />
+                  {isOpen&&<PopUp navigation={navigation} />}
                   <ScrollView>
                   <KeyboardAvoidingView behavior="position">
                   <View style={styles.top}>

@@ -9,13 +9,16 @@ import {useSelector, useDispatch} from 'react-redux';
 import React, { useEffect, useState } from 'react'
 import { collection, deleteDoc, Firestore, getDocs, query,where, onSnapshot } from 'firebase/firestore';
 import {firestore,auth} from '../config/firebase';
+import PopUp from "../components/PopUp";
 
 
 
 const img = 'https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80';
 
 function ServitorProfile({navigation,route}){
-     const {data} = route.params
+     const {data} = route.params;
+     const [isOpen,setIsOpen] = useState(false);
+
  
      const [isLoading,setIsLoading] = useState(false);
     
@@ -51,7 +54,8 @@ function ServitorProfile({navigation,route}){
     return(
         <View style={styles.container}>
             <SafeAreaView>
-                <Header widthMsg={true} navigation={navigation} withBackIcon={true}/>
+                <Header widthMsg={true} setIsOpen={setIsOpen} navigation={navigation} withBackIcon={true}/>
+                {isOpen&&<PopUp navigation={navigation} />}
                 <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
                  <Image source={{uri: data.imgUrl}} style={{width: Dimensions.get('window').width*0.3,
                                       height: Dimensions.get('window').width*0.3, 

@@ -4,12 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import ToggleSwitch from 'toggle-switch-react-native';
 import { Ionicons } from '@expo/vector-icons';
 import Header from '../components/Header';
+import PopUp from '../components/PopUp';
 
 
 export default function Settings({navigation}) {
 
   const [isNotifications,setIsNotifications] = React.useState(true);
   const [isTheme,setIsTheme] = React.useState(true);
+  const [isOpen,setIsOpen] = React.useState(false);
+
   function navigate() {
     
       navigation.navigate('AccountSettings');
@@ -20,7 +23,8 @@ export default function Settings({navigation}) {
       <StatusBar backgroundColor="#000" barStyle="light-content" />
     <ScrollView style={{backgroundColor:'black'}}>
         <View>
-            <Header withBackIcon={false}/>
+            <Header setIsOpen={setIsOpen} withBackIcon={false}/>
+            {isOpen&&<PopUp navigation={navigation} />}
             <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
             <View style={{...styles.notifycard,}}>
               

@@ -3,7 +3,7 @@ import React from "react";
 import logo from '../assets/images/logo.png';
 import { Icon } from "react-native-gradient-icon";
 
-export default function Header({withBackIcon, widthMsg, navigation}) {
+export default function Header({withBackIcon, widthMsg, navigation,setIsOpen}) {
     const {height, width} = useWindowDimensions();
     function prevPage() {
         navigation.goBack();
@@ -40,7 +40,7 @@ export default function Header({withBackIcon, widthMsg, navigation}) {
                 />}
             </Pressable>
             
-            <Pressable>
+            <Pressable onPress={()=>setIsOpen(prev=>!prev)}>
                 <Icon  
                     size={Dimensions.get('window').height*0.04}
                     colors={[

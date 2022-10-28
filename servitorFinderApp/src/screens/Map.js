@@ -9,6 +9,7 @@ import SearchInput from '../components/SearchInput';
 import {useSelector} from 'react-redux';
 import {getDocs, collection, query, where, onSnapshot, } from 'firebase/firestore';
 import {firestore} from '../config/firebase';
+import PopUp from '../components/PopUp';
 
 export default function Map({navigation}) {
 
@@ -16,6 +17,8 @@ export default function Map({navigation}) {
   const [searchData,setSearchData] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [searchItem,setSearchItem] = React.useState('');
+  const [isOpen,setIsOpen] = React.useState(false);
+
 
   function viewProfile(){
     navigation.navigate('Profile');
@@ -68,8 +71,8 @@ export default function Map({navigation}) {
     <SafeAreaView style={styles.container}>
       
       <StatusBar backgroundColor="#000" barStyle="light-content" />
-      <Header withBackIcon={false} />
-      
+      <Header setIsOpen={setIsOpen} withBackIcon={false} />
+      {isOpen&&<PopUp navigation={navigation} />}
       <MapView 
            
           zoomEnabled 

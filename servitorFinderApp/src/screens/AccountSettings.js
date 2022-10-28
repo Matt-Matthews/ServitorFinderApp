@@ -1,16 +1,17 @@
 import React from 'react';
-import { View, ScrollView, KeyboardAvoidingView, Image, StyleSheet, Pressable, Dimensions, StatusBar } from 'react-native';
+import { View, ScrollView, KeyboardAvoidingView, Image, StyleSheet, Pressable, Dimensions, StatusBar, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-gradient-icon';
 import Header from '../components/Header';
 import * as ImagePicker from 'expo-image-picker';
 import CustomInput from '../components/CustomInput';
 import CustomeBtn from '../components/CustomeBtn';
-import { collection, addDoc, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, getDocs, updateDoc, doc } from "firebase/firestore";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { auth, firestore,storage } from '../config/firebase';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PopUp from '../components/PopUp';
 
 
 export default function AccountSettings({ navigation }) {
@@ -23,7 +24,9 @@ export default function AccountSettings({ navigation }) {
   const [confPassword, setConfPassword] = useState(userData[0].password);
   const [image, setImage] = useState(userData[0].imgUrl);
   const [users, setUsers] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isOpen,setIsOpen] = useState(false);
+  const [isLoading,setIsLoading] = useState(false);
+
 
   useEffect(() => {
     const userCollectionRef = collection(firestore, "users")
@@ -71,6 +74,7 @@ export default function AccountSettings({ navigation }) {
   };
 
   const updateUser = async () => {
+    setIsLoading(true);
     const storageRef = ref(
       storage,
       `/images/${Date.now()}image`
@@ -89,49 +93,17 @@ export default function AccountSettings({ navigation }) {
               password: password,
     
             }).then(()=>{
-    
+              setIsLoading(false);
             }).catch(e=>{
-              alert(e.message)
+              alert(e.message);
+              setIsLoading(false);
             });
      
   }).then(()=>{
-    alert('done')
+    alert('done');
+    setIsLoading(false);
   })
   })
-
-    // const uploadImage = uploadBytesResumable(storageRef, blob);
-    // uploadImage.on(
-    //   "state_changed",
-    //   (snapshot) => {
-    //     const progressPercent = Math.round(
-    //       (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-    //     );
-    //   },
-    //   (err) => {
-    //     console.log(err);
-    //   },
-    //   await getDownloadURL(uploadImage.snapshot.ref).then(async(url) => {
-     
-    //     console.log(url);
-    //     await updateDoc(doc(firestore,'users', userData[0].docId),{
-    //       firstName: firstName,
-    //       lastName: lastName,
-    //       telNo: telNo,
-    //       email: email,
-    //       imgUrl: url,
-    //       password: password,
-
-    //     }).then(()=>{
-
-    //     }).catch(e=>{
-    //       alert(e.message)
-    //     });
-
-        
-    //   }));
-
-
-    
   };
 
 
@@ -139,11 +111,11 @@ export default function AccountSettings({ navigation }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar backgroundColor="#000" barStyle="light-content" />
-      <Header navigation={navigation} withBackIcon={true} />
-
+      <Header setIsOpen={setIsOpen} navigation={navigation} withBackIcon={true} />
+      {isOpen&&<PopUp navigation={navigation} />}
       <ScrollView style={{ backgroundColor: 'black' }}>
         <View style={{ marginTop: Dimensions.get('window').height * 0.04, }} />
-        {user.map((info, id) =>
+        {user.map(() =>
         (
           <KeyboardAvoidingView behavior="position">
             <View style={{ ...styles.imageContainer }}>
@@ -186,6 +158,7 @@ export default function AccountSettings({ navigation }) {
 
               <CustomeBtn
                 onPress={updateUser} text={'Update'} />
+                {isLoading&&<ActivityIndicator size="large" color="#D428A8" />}
               <View style={{ marginTop: Dimensions.get('window').height * 0.02, }} />
 
             </View>

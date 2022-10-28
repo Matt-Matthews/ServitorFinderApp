@@ -2,8 +2,10 @@ import React from 'react';
 import {StyleSheet, View, Text,ScrollView, Dimensions, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '../components/Header';
+import PopUp from '../components/PopUp';
 
-export default function Notifications() {
+export default function Notifications({navigation}) {
+  const [isOpen,setIsOpen] = React.useState(false);
 
     const notification = [
         {
@@ -40,7 +42,8 @@ export default function Notifications() {
       <StatusBar backgroundColor="#000" barStyle="light-content" />
         <ScrollView style={{backgroundColor:'black'}}>
             <View style={{...styles.container}}>
-                <Header withBackIcon={false}/>
+                <Header setIsOpen={setIsOpen} withBackIcon={false}/>
+                {isOpen&&<PopUp navigation={navigation} />}
                 <View style={{marginTop: Dimensions.get('window').height*0.04,}} />
                 {notify()}
             </View>
