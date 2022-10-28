@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "servitorFinderApp",
+    "slug": "servitorFinderApp",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/assets/images/logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./src/assets/images/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "packagerOpts": {
+      "sourceExts": [
+        "cjs"
+      ]
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "config":{
+        "googleMaps":{
+          "apiKey": "AIzaSyBHk4tyYisgOLdsh9n_ryInXtwFa3BBTGQ"
+        }
+      },
+      "supportsTablet": true
+    },
+    "android": {
+      "config":{
+        "googleMaps":{
+          "apiKey": "AIzaSyBHk4tyYisgOLdsh9n_ryInXtwFa3BBTGQ"
+        }
+      },
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.servitorFinderApp.servitorFinderApp"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a78408eb-5814-40d0-9764-abe64eba0d00"
+      }
+    }
+  }
+}
